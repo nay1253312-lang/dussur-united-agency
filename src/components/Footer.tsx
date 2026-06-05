@@ -5,7 +5,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Send, Check, Sparkles, Heart, X, Shield, FileText, Info } from 'lucide-react';
+import { Send, Check, Sparkles, Heart, X, Shield, FileText, Info, MessageCircle, Linkedin, Instagram, Twitter } from 'lucide-react';
 import DussurLogo from './DussurLogo';
 import { useLanguage } from '../LanguageContext';
 
@@ -44,7 +44,7 @@ export default function Footer() {
               <img 
                 src={isAr ? "/logo-en.svg" : "/logo-ar.svg"} 
                 alt="Dussur United Logo" 
-                className="h-20 md:h-26 w-auto object-contain hover:brightness-110 transition-all drop-shadow-[0_2px_8px_rgba(200,90,23,0.15)]"
+                className="h-32 md:h-44 w-auto object-contain hover:brightness-110 hover:scale-105 active:scale-95 transition-all drop-shadow-[0_2px_12px_rgba(200,90,23,0.25)]"
                 referrerPolicy="no-referrer"
               />
             </div>
@@ -155,29 +155,46 @@ export default function Footer() {
           </div>
 
           {/* Social connections */}
-          <div className="flex gap-4 items-center justify-center">
-            <a href="https://wa.me/966548971306" target="_blank" rel="noopener noreferrer" className="text-xs text-[#A39E8C] hover:text-[#C85A17] hover:underline transition-all">
-              {isAr ? "واتساب" : "WhatsApp"}
+          <div className="flex gap-3.5 items-center justify-center">
+            <a 
+              href="https://wa.me/966548971306" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="p-2.5 rounded-full bg-[#080809] border border-[#FFF6CD]/10 text-[#A39E8C] hover:text-[#FFD000] hover:border-[#C85A17]/30 active:text-[#FFD000] active:border-[#FFD000] active:scale-95 focus:text-[#FFD000] focus:border-[#FFD000] transition-all shadow-md shadow-black/40" 
+              title={isAr ? "واتساب" : "WhatsApp"}
+            >
+              <MessageCircle className="w-4.5 h-4.5" />
             </a>
-            <a href="#" className="text-xs text-[#A39E8C] hover:text-[#C85A17] hover:underline transition-all">
-              {isAr ? "لينكدإن" : "LinkedIn"}
+            <a 
+              href="#" 
+              className="p-2.5 rounded-full bg-[#080809] border border-[#FFF6CD]/10 text-[#A39E8C] hover:text-[#FFD000] hover:border-[#C85A17]/30 active:text-[#FFD000] active:border-[#FFD000] active:scale-95 focus:text-[#FFD000] focus:border-[#FFD000] transition-all shadow-md shadow-black/40" 
+              title={isAr ? "لينكدإن" : "LinkedIn"}
+            >
+              <Linkedin className="w-4.5 h-4.5" />
             </a>
-            <a href="#" className="text-xs text-[#A39E8C] hover:text-[#C85A17] hover:underline transition-all">
-              {isAr ? "سناب شات" : "Snapchat"}
+            <a 
+              href="#" 
+              className="p-2.5 rounded-full bg-[#080809] border border-[#FFF6CD]/10 text-[#A39E8C] hover:text-[#FFD000] hover:border-[#C85A17]/30 active:text-[#FFD000] active:border-[#FFD000] active:scale-95 focus:text-[#FFD000] focus:border-[#FFD000] transition-all shadow-md shadow-black/40" 
+              title={isAr ? "إنستغرام" : "Instagram"}
+            >
+              <Instagram className="w-4.5 h-4.5" />
             </a>
-            <a href="#" className="text-xs text-[#A39E8C] hover:text-[#C85A17] hover:underline transition-all">
-              {isAr ? "المنصة إكس" : "X Platform"}
+            <a 
+              href="#" 
+              className="p-2.5 rounded-full bg-[#080809] border border-[#FFF6CD]/10 text-[#A39E8C] hover:text-[#FFD000] hover:border-[#C85A17]/30 active:text-[#FFD000] active:border-[#FFD000] active:scale-95 focus:text-[#FFD000] focus:border-[#FFD000] transition-all shadow-md shadow-black/40" 
+              title={isAr ? "المنصة إكس" : "X Platform"}
+            >
+              <Twitter className="w-4.5 h-4.5" />
             </a>
           </div>
         </div>
 
         {/* Bottom copyright ribbon */}
         <div className="pt-4 flex flex-col sm:flex-row justify-between items-center gap-4 relative z-10 text-center sm:text-right">
-          <p className="text-[10px] text-[#A39E8C] flex items-center gap-1">
+          <p className="text-[10px] text-[#A39E8C]">
              {isAr 
-               ? "جميع الحقوق محفوظة لشركة دُسُر المتحدة © 2026. صنع بشغف نجد وعراقة أبها"
-               : "All rights reserved to Dussur United © 2026. Crafted with Najdi passion & Abha heritage"}
-            <Heart className="w-3.5 h-3.5 fill-[#C85A17] text-[#C85A17]" />
+                ? "جميع الحقوق محفوظة لشركة دُسُر المتحدة © 2026. صنع بشغف نجد وعراقة أبها"
+                : "All rights reserved to Dussur United © 2026. Crafted with Najdi passion & Abha heritage"}
           </p>
         </div>
 

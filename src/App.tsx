@@ -7,7 +7,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useVelocity, useTransform, useSpring } from 'motion/react';
 import { 
   Sparkles, Menu, X, ArrowUpRight, HelpCircle, 
-  ChevronUp, Languages, ArrowLeftRight, Check, BookOpen 
+  ChevronUp, Languages, ArrowLeftRight, Check, BookOpen
 } from 'lucide-react';
 
 import Preloader from './components/Preloader';
@@ -137,11 +137,116 @@ export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+  const [activeSection, setActiveSection] = useState("hero-sec");
 
   // Mouse trajectory tracking variables
   const [mousePos, setMousePos] = useState({ x: -100, y: -100 });
   const [trailPos, setTrailPos] = useState({ x: -100, y: -100 });
   const [isTouch, setIsTouch] = useState(true);
+
+  // Active section tracking for dynamic fixed ship animation
+  useEffect(() => {
+    if (isMobileOrTablet) return;
+
+    const observerOptions = {
+      root: null,
+      rootMargin: "-25% 0px -55% 0px",
+      threshold: 0.1,
+    };
+
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, observerOptions);
+    const sectionIds = [
+      "hero-sec",
+      "about-sec",
+      "services-sec",
+      "builder-container",
+      "ai-consultant-sec",
+      "portfolio-sec",
+      "contact-sec"
+    ];
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => {
+      sectionIds.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) observer.unobserve(el);
+      });
+    };
+  }, [isPreloaded, isMobileOrTablet]);
+
+  const getShipAnimate = () => {
+    switch (activeSection) {
+      case "hero-sec":
+        return {
+          y: [0, -18, 0],
+          rotate: [0, 1.2, 0],
+          scale: 1,
+          opacity: 0.38
+        };
+      case "about-sec":
+        return {
+          y: [-15, -35, -15],
+          rotate: [1, -1.2, 1],
+          scale: 1.05,
+          opacity: 0.28
+        };
+      case "services-sec":
+        return {
+          y: [12, -8, 12],
+          rotate: [-1.2, 0.8, -1.2],
+          scale: 0.94,
+          opacity: 0.2
+        };
+      case "builder-container":
+        return {
+          y: [-6, -26, -6],
+          rotate: [0.8, -1, 0.8],
+          scale: 1.04,
+          opacity: 0.25
+        };
+      case "ai-consultant-sec":
+        return {
+          y: [15, -5, 15],
+          rotate: [-1.4, 0.6, -1.4],
+          scale: 0.88,
+          opacity: 0.17
+        };
+      case "portfolio-sec":
+        return {
+          y: [-10, -28, -10],
+          rotate: [1, -0.8, 1],
+          scale: 1.12,
+          opacity: 0.22
+        };
+      case "contact-sec":
+        return {
+          y: [20, 0, 20],
+          rotate: [-1.8, 1, -1.8],
+          scale: 0.93,
+          opacity: 0.3
+        };
+      default:
+        return {
+          y: [0, -18, 0],
+          rotate: [0, 1, 0],
+          scale: 1,
+          opacity: 0.35
+        };
+    }
+  };
+
 
   useEffect(() => {
     // 1. Calculate page scroll percentages for custom linear navigation indicator
@@ -229,7 +334,7 @@ export default function App() {
     <div className="relative min-h-screen bg-[#060607] text-[#FFF6CD] antialiased overflow-x-hidden selection:bg-[#C85A17] selection:text-white pb-0">
       
       {/* Cinematic Luxury Ambient Canvas Background - replaces flat black */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden select-none">
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden select-none">
         {/* Rich deep royal charcoal & gold backdrop radial blends */}
         <div className="absolute top-0 inset-x-0 h-screen bg-gradient-to-b from-[#111216]/80 via-[#060607] to-transparent opacity-65" />
         
@@ -241,108 +346,30 @@ export default function App() {
         {/* Architectural Pillars grid backdrop - symbolizes dussur anchors */}
         <div className="absolute inset-0 bg-grid-gold opacity-30 [mask-image:radial-gradient(ellipse_at_center,black_60%,transparent_100%)]" />
 
-        {/* Abstract "Dussur & Alwah" Ship blueprint/hull & geometric rivet linkages (هيكل السفينة ومسامير الربط) */}
-        <div className="absolute inset-0 pointer-events-none select-none opacity-45 z-0">
-          <svg className="w-full h-full text-[#FFD000]/18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 3600" preserveAspectRatio="none">
-            {/* Wooden Planks structural outline overlays (ذات ألواح) */}
-            <path d="M -100,200 C 300,350 700,100 1200,500" fill="none" stroke="currentColor" strokeWidth="0.5" strokeDasharray="15 5" opacity="0.3" />
-            <path d="M -100,450 C 300,600 700,350 1200,750" fill="none" stroke="currentColor" strokeWidth="0.5" strokeDasharray="15 5" opacity="0.3" />
-            <path d="M -100,550 C 300,700 700,450 1200,850" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.25" />
-            
-            {/* Elegant luxury blueprint curve 1 - Tracing noble ship hull flow */}
-            <path d="M -100,300 C 300,450 700,200 1200,600 C 1350,700 1500,850 1600,1050" fill="none" stroke="currentColor" strokeWidth="1.25" strokeDasharray="5 5" />
-            <path d="M -100,330 C 300,480 700,230 1200,630" fill="none" stroke="currentColor" strokeWidth="2" />
-            
-            {/* Ropes & Joints connection linking nodes (Planks/Alwah bindings) */}
-            <path d="M 120,450 L 400,270 L 780,360 L 1150,230" fill="none" stroke="#C85A17" strokeWidth="1.5" opacity="0.4" />
-            
-            {/* Noble Rivet Node coordinates (Bronze & Gold Nails/Pegs - دُسُر) */}
-            {/* Node 1 */}
-            <circle cx="120" cy="450" r="14" fill="none" stroke="#FFD000" strokeWidth="0.5" strokeDasharray="3 2" opacity="0.6" />
-            <circle cx="120" cy="450" r="8" fill="none" stroke="#C85A17" strokeWidth="0.75" opacity="0.5" />
-            <circle cx="120" cy="450" r="4.5" className="fill-[#FFD000]" />
-            <line x1="120" y1="450" x2="120" y2="530" stroke="currentColor" strokeWidth="0.75" opacity="0.5" />
-            <text x="135" y="454" fill="#FFF6CD" fontSize="10" fontFamily="monospace" opacity="0.6" letterSpacing="1">DSR-01 [KEY] / ٤٥٠</text>
-            
-            {/* Node 2 */}
-            <circle cx="400" cy="270" r="12" fill="none" stroke="#FFD000" strokeWidth="0.5" strokeDasharray="3 2" opacity="0.5" />
-            <circle cx="400" cy="270" r="4.5" className="fill-[#FFD000]" />
-            <text x="415" y="274" fill="#FFF6CD" fontSize="10" fontFamily="monospace" opacity="0.6" letterSpacing="1">DSR-02 / ٢٧٠</text>
-            
-            {/* Node 3 */}
-            <circle cx="780" cy="360" r="16" fill="none" stroke="#C85A17" strokeWidth="0.5" strokeDasharray="4 2" opacity="0.6" />
-            <circle cx="780" cy="360" r="8" fill="none" stroke="#FFD000" strokeWidth="0.75" opacity="0.4" />
-            <circle cx="780" cy="360" r="6" className="fill-[#C85A17]" />
-            <text x="795" y="364" fill="#FFF6CD" fontSize="10" fontFamily="monospace" opacity="0.7" letterSpacing="1">DSR-03 [NODE] / ٣٦٠</text>
-            
-            {/* Node 4 */}
-            <circle cx="1150" cy="230" r="10" fill="none" stroke="#FFD000" strokeWidth="0.5" strokeDasharray="3 2" opacity="0.5" />
-            <circle cx="1150" cy="230" r="4" className="fill-[#FFD000]" />
-            <text x="1165" y="234" fill="#FFF6CD" fontSize="10" fontFamily="monospace" opacity="0.6" letterSpacing="1">DSR-04 / ٢٣٠</text>
-
-            {/* Noble Blueprint segment 2: Midsection structural anchors (Dussur ties holding wooden planks) */}
-            <path d="M 150,1150 Q 450,1450 850,1200 T 1350,1500" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.7" />
-            <path d="M 150,1180 Q 450,1480 850,1230 T 1350,1530" fill="none" stroke="#C85A17" strokeWidth="1" opacity="0.6" />
-            <path d="M 150,1350 Q 450,1650 850,1400 T 1350,1700" fill="none" stroke="currentColor" strokeWidth="0.5" strokeDasharray="20 10" opacity="0.25" />
-            
-            {/* Series of vertical interlocking "Dussur" bolts linking diagonal panels */}
-            <line x1="300" y1="1150" x2="350" y2="1330" stroke="currentColor" strokeWidth="1.25" strokeDasharray="3 3" />
-            <circle cx="300" cy="1150" r="10" fill="none" stroke="#FFD000" strokeWidth="0.5" opacity="0.5" />
-            <circle cx="300" cy="1150" r="3.5" className="fill-[#FFD000]" />
-            <circle cx="350" cy="1330" r="12" fill="none" stroke="#C85A17" strokeWidth="0.5" strokeDasharray="2 2" opacity="0.5" />
-            <circle cx="350" cy="1330" r="4" className="fill-[#FFF6CD]" />
-            <text x="365" y="1334" fill="#FFF6CD" fontSize="10" fontFamily="monospace" opacity="0.6">PLK-07 / ١٣٣٠</text>
-            
-            <line x1="600" y1="1250" x2="620" y2="1400" stroke="currentColor" strokeWidth="1.5" />
-            <circle cx="600" cy="1250" r="14" fill="none" stroke="#C85A17" strokeWidth="0.5" strokeDasharray="4 2" opacity="0.6" />
-            <circle cx="600" cy="1250" r="4" className="fill-[#C85A17]" />
-            <circle cx="620" cy="1400" r="12" fill="none" stroke="#FFD000" strokeWidth="0.5" opacity="0.5" />
-            <circle cx="620" cy="1400" r="4.5" className="fill-[#FFD000]" />
-            <text x="635" y="1404" fill="#FFF6CD" fontSize="10" fontFamily="monospace" opacity="0.6">DSR-05 / ١٤٠٠</text>
-
-            {/* Noble Blueprint segment 3: Bottom ship deck keel layout */}
-            <path d="M 200,2150 C 500,1950 900,2350 1300,2100" fill="none" stroke="currentColor" strokeWidth="1.75" />
-            <path d="M 200,2200 C 500,2000 900,2400 1300,2150" fill="none" stroke="#FFD000" strokeWidth="0.75" opacity="0.5" />
-            <path d="M 200,2350 C 500,2150 900,2550 1300,2300" fill="none" stroke="currentColor" strokeWidth="0.5" strokeDasharray="12 4" opacity="0.3" />
-            
-            {/* Glowing keel nails dots (مسامير القاعدة السفلية للسفينة) */}
-            <circle cx="350" cy="2060" r="14" fill="none" stroke="#FFD000" strokeWidth="0.5" opacity="0.6" />
-            <circle cx="350" cy="2060" r="5" className="fill-[#FFD000]" />
-            <text x="365" y="2064" fill="#FFF6CD" fontSize="10" fontFamily="monospace" opacity="0.6">KEEL-DSR / ٢٠٦٠</text>
-            
-            <circle cx="680" cy="2130" r="12" fill="none" stroke="#C85A17" strokeWidth="0.5" strokeDasharray="3 2" opacity="0.5" />
-            <circle cx="680" cy="2130" r="4" className="fill-[#C85A17]" />
-            
-            <circle cx="1020" cy="2220" r="14" fill="none" stroke="#FFD000" strokeWidth="0.5" opacity="0.5" />
-            <circle cx="1020" cy="2220" r="4" className="fill-[#FFD000]" />
-            <text x="1035" y="2224" fill="#FFF6CD" fontSize="10" fontFamily="monospace" opacity="0.6">DSR-09 / ٢٢٢٠</text>
-            
-            {/* Traditional compass / astrolabe star alignment chart (represents Dussur navigation direction) */}
-            <g transform="translate(1100, 850) scale(1.1)" opacity="0.55">
-              <circle cx="100" cy="100" r="80" fill="none" stroke="currentColor" strokeWidth="1" />
-              <circle cx="100" cy="100" r="60" fill="none" stroke="#C85A17" strokeWidth="0.5" strokeDasharray="4 2" />
-              <circle cx="100" cy="100" r="40" fill="none" stroke="currentColor" strokeWidth="0.75" strokeDasharray="2 2" />
-              <line x1="100" y1="10" x2="100" y2="190" stroke="currentColor" strokeWidth="1" />
-              <line x1="10" y1="100" x2="190" y2="100" stroke="currentColor" strokeWidth="1" />
-              <polygon points="100,20 106,100 100,180 94,100" fill="none" stroke="#C85A17" strokeWidth="1" />
-              <polygon points="20,100 100,106 180,100 100,94" fill="none" stroke="#FFD000" strokeWidth="1" />
-              <circle cx="100" cy="100" r="4" className="fill-[#FFF6CD]" />
-              <text x="115" y="95" fill="#FFF6CD" fontSize="9" fontFamily="monospace" opacity="0.8">ALIGN / ٣٦٠°</text>
-            </g>
-
-            {/* Secondary navigation astrolabe at deep contact end */}
-            <g transform="translate(150, 2750) scale(0.9)" opacity="0.45">
-              <circle cx="100" cy="100" r="70" fill="none" stroke="currentColor" strokeWidth="1" />
-              <circle cx="100" cy="100" r="50" fill="none" stroke="#C85A17" strokeWidth="0.5" strokeDasharray="5 3" />
-              <line x1="100" y1="20" x2="100" y2="180" stroke="#FFD000" strokeWidth="0.75" />
-              <line x1="20" y1="100" x2="180" y2="100" stroke="#FFD000" strokeWidth="0.75" />
-              <polygon points="100,30 104,100 100,170 96,100" fill="none" stroke="#C85A17" strokeWidth="0.75" />
-              <polygon points="30,100 100,104 170,100 100,96" fill="none" stroke="#FFD000" strokeWidth="0.75" />
-              <circle cx="100" cy="100" r="6" className="fill-[#C85A17]" />
-              <text x="110" y="115" fill="#FFF6CD" fontSize="8" fontFamily="monospace" opacity="0.8">DUSSUR.NAV</text>
-            </g>
-          </svg>
-        </div>
+        {/* Floating majestic gold stroke line-art sailing ship (سفينة شراعية بستروك ذهبي غامر) */}
+        <motion.img 
+          src="/gold_stroke_ship.png"
+          alt="Sovereign Gold Stroke Sailing Ship"
+          className="absolute w-[120vw] md:w-[82vw] max-w-[1250px] h-auto pointer-events-none select-none"
+          style={{ 
+            top: '12%',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            mixBlendMode: 'screen', 
+            filter: 'contrast(1.6) brightness(0.9) saturate(1.1)',
+            backgroundColor: 'transparent',
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden'
+          }}
+          animate={getShipAnimate()}
+          transition={{ 
+            duration: 1.5,
+            ease: "easeOut",
+            y: { duration: 12, repeat: Infinity, ease: "easeInOut" },
+            rotate: { duration: 15, repeat: Infinity, ease: "easeInOut" },
+          }}
+          referrerPolicy="no-referrer"
+        />
 
         {/* Live floating gold dust particles (غبار الذهب المترامي) */}
         <div className="absolute inset-0">
@@ -402,7 +429,7 @@ export default function App() {
           <NarrativeNavigation />
 
           {/* 3. Luxury Sticky Header Navigation */}
-          <header className="fixed top-0 inset-x-0 bg-[#080809]/40 backdrop-blur-md z-50 border-b border-[#FFF6CD]/5 select-none h-20 md:h-24">
+          <header className="fixed top-0 inset-x-0 bg-[#080809]/40 backdrop-blur-md z-50 border-b border-[#FFF6CD]/5 select-none h-28 md:h-36">
             <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
               
               {/* Logo (Arabic or English) */}
@@ -411,7 +438,7 @@ export default function App() {
                   <img 
                     src={lang === 'ar' ? '/logo-ar.svg' : '/logo-en.svg'} 
                     alt="Dussur" 
-                    className="h-18 md:h-24 w-auto object-contain hover:brightness-110 active:scale-95 transition-all drop-shadow-[0_2px_10px_rgba(200,90,23,0.15)]"
+                    className="h-24 md:h-32 w-auto object-contain hover:brightness-110 hover:scale-105 active:scale-95 transition-all drop-shadow-[0_2px_12px_rgba(200,90,23,0.25)]"
                     referrerPolicy="no-referrer"
                   />
                 </a>
@@ -497,7 +524,7 @@ export default function App() {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                className="fixed top-20 md:top-24 inset-x-0 bg-[#0F1012] border-b border-[#FFF6CD]/10 z-40 lg:hidden overflow-hidden select-none"
+                className="fixed top-24 md:top-28 inset-x-0 bg-[#0F1012] border-b border-[#FFF6CD]/10 z-40 lg:hidden overflow-hidden select-none"
               >
                 <div className={`p-6 flex flex-col gap-4 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
                   <button onClick={() => scrollToSection("hero-sec")} className="text-sm font-semibold text-[#A39E8C] py-2 border-b border-white/5">{t('nav.home')}</button>
@@ -523,69 +550,93 @@ export default function App() {
             )}
           </AnimatePresence>
 
-          {/* 5. Content Layout Viewport stack */}
-          <main className="relative pt-20 md:pt-24 space-y-20 md:space-y-32">
+          {/* 5. Content Layout Viewport stack (تأثير تراكب الصفحات الأنيق) */}
+          <main className="relative">
             
             {/* View A: Majestic Hero View */}
-            <ScrollSectionReveal>
-              <HomeHero />
-            </ScrollSectionReveal>
+            <div id="hero-sec" className="relative w-full bg-transparent pt-12 pb-16 scroll-mt-24">
+              <ScrollSectionReveal>
+                <div className="max-w-7xl mx-auto w-full px-6">
+                  <HomeHero />
+                </div>
+              </ScrollSectionReveal>
+            </div>
 
             <GoldDustSeparator />
 
             {/* View B: Philosophy About Section + Incremental Counting Stats */}
-            <ScrollSectionReveal>
-              <PillarsView />
-            </ScrollSectionReveal>
+            <div id="about-sec" className="relative w-full bg-transparent py-16 md:py-24 scroll-mt-24">
+              <ScrollSectionReveal>
+                <div className="max-w-7xl mx-auto w-full px-6">
+                  <PillarsView />
+                </div>
+              </ScrollSectionReveal>
+            </div>
 
             <GoldDustSeparator />
 
             {/* View C: Services Seven Pillars interactive Bento Selector Dashboard */}
-            <ScrollSectionReveal>
-              <ServicesView />
-            </ScrollSectionReveal>
+            <div id="services-sec" className="relative w-full bg-transparent py-16 md:py-24 scroll-mt-24">
+              <ScrollSectionReveal>
+                <div className="max-w-7xl mx-auto w-full px-6">
+                  <ServicesView />
+                </div>
+              </ScrollSectionReveal>
+            </div>
 
             <GoldDustSeparator />
 
             {/* View D: Interactive scope and timeline configurator */}
-            <ScrollSectionReveal>
-              <div className="px-6">
-                <div className="max-w-4xl mx-auto text-center space-y-2 mb-4">
-                  <span className="text-[10px] tracking-widest font-bold text-[#C85A17] uppercase">{t('builder.sec_tag')}</span>
-                  <h3 className="text-2xl md:text-4xl font-extrabold text-[#FFF6CD]">{t('builder.sec_title')}</h3>
-                  <p className="text-xs md:text-sm text-[#A39E8C]">{t('builder.sec_desc')}</p>
+            <div id="builder-container" className="relative w-full bg-transparent py-16 md:py-24 scroll-mt-24">
+              <ScrollSectionReveal>
+                <div className="max-w-7xl mx-auto w-full px-6">
+                  <div className="max-w-4xl mx-auto text-center space-y-2 mb-8">
+                    <span className="text-[10px] tracking-widest font-bold text-[#C85A17] uppercase">{t('builder.sec_tag')}</span>
+                    <h3 className="text-2xl md:text-4xl font-extrabold text-[#FFF6CD]">{t('builder.sec_title')}</h3>
+                    <p className="text-xs md:text-sm text-[#A39E8C]">{t('builder.sec_desc')}</p>
+                  </div>
+                  <ProjectBuilder />
                 </div>
-                <ProjectBuilder />
-              </div>
-            </ScrollSectionReveal>
+              </ScrollSectionReveal>
+            </div>
 
             <GoldDustSeparator />
 
             {/* View E: Co-Pilot AI Consultancy Strategic Portal */}
-            <ScrollSectionReveal>
-              <div id="ai-consultant-sec" className="px-6 scroll-mt-24">
-                <div className="max-w-4xl mx-auto text-center space-y-2 mb-4">
-                  <span className="text-[10px] tracking-widest font-bold text-[#FFD000] uppercase">{t('ai.sec_tag')}</span>
-                  <h3 className="text-2xl md:text-4xl font-extrabold text-[#FFF6CD]">{t('ai.sec_title')}</h3>
-                  <p className="text-xs md:text-sm text-[#A39E8C]">{t('ai.sec_desc')}</p>
+            <div id="ai-consultant-sec" className="relative w-full bg-transparent py-16 md:py-24 scroll-mt-24">
+              <ScrollSectionReveal>
+                <div className="max-w-7xl mx-auto w-full px-6">
+                  <div className="max-w-4xl mx-auto text-center space-y-2 mb-8">
+                    <span className="text-[10px] tracking-widest font-bold text-[#FFD000] uppercase">{t('ai.sec_tag')}</span>
+                    <h3 className="text-2xl md:text-4xl font-extrabold text-[#FFF6CD]">{t('ai.sec_title')}</h3>
+                    <p className="text-xs md:text-sm text-[#A39E8C]">{t('ai.sec_desc')}</p>
+                  </div>
+                  <AIConsultant />
                 </div>
-                <AIConsultant />
-              </div>
-            </ScrollSectionReveal>
+              </ScrollSectionReveal>
+            </div>
 
             <GoldDustSeparator />
 
             {/* View F: Nation-tier portfolio showcase */}
-            <ScrollSectionReveal>
-              <PortfolioView />
-            </ScrollSectionReveal>
+            <div id="portfolio-sec" className="relative w-full bg-transparent py-16 md:py-24 scroll-mt-24">
+              <ScrollSectionReveal>
+                <div className="max-w-7xl mx-auto w-full px-6">
+                  <PortfolioView />
+                </div>
+              </ScrollSectionReveal>
+            </div>
 
             <GoldDustSeparator />
 
             {/* View G: Contact Form section */}
-            <ScrollSectionReveal>
-              <ContactView />
-            </ScrollSectionReveal>
+            <div id="contact-sec" className="relative w-full bg-transparent py-16 md:py-24 scroll-mt-24">
+              <ScrollSectionReveal>
+                <div className="max-w-7xl mx-auto w-full px-6">
+                  <ContactView />
+                </div>
+              </ScrollSectionReveal>
+            </div>
 
           </main>
 

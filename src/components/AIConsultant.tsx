@@ -176,7 +176,7 @@ ${result.recommendedServices.join(' | ')}
   return (
     <div className="w-full relative py-12 px-2">
       {/* Light subtle container card */}
-      <div className="w-full max-w-5xl mx-auto rounded-2xl bg-[#0F1012]/40 border border-[#FFF6CD]/5 backdrop-blur-xl overflow-hidden shadow-2xl">
+      <div className="w-full max-w-5xl mx-auto rounded-2xl bg-[#0F1012]/08 border border-[#FFF6CD]/5 backdrop-blur-md overflow-hidden shadow-2xl">
         <div className="p-1 bg-gradient-to-l from-[#C85A17] to-[#FFD000] opacity-75" />
         
         <div className="p-6 md:p-10">
@@ -185,16 +185,16 @@ ${result.recommendedServices.join(' | ')}
               <div className="flex items-center gap-2 mb-2 justify-start">
                 <Sparkles className="w-6 h-6 text-[#FFD000]" />
                 <span className="text-xs uppercase tracking-widest font-semibold text-[#FFD000]">
-                  {lang === 'ar' ? 'مستشار الهوية والتحول لـ دُسُر' : 'Dussur Strategic AI Co-Pilot'}
+                  {lang === 'ar' ? 'دُسُر AI | مساعدك الرقمي الفوري' : 'Dussur AI | Your Instant Strategic Guide'}
                 </span>
               </div>
               <h3 className="text-2xl md:text-3xl font-bold text-[#FFF6CD]">
-                {lang === 'ar' ? 'بوابة التخطيط والريادة الاستراتيجية' : 'Strategic Brand Planning Portal'}
+                {lang === 'ar' ? 'حلل مشروعك واعرف وش تحتاج معنا بضغطة زر' : 'Analyze Your Project & Discover How We Can Help'}
               </h3>
               <p className="text-sm text-[#A39E8C] mt-2 leading-relaxed">
                 {lang === 'ar' 
-                  ? 'اصنع استراتيجيتك، وعزز تواصلك الرقمي بثبات تام في دقيقة واحدة بمساعدة المحرك الاستشاري لـ دُسُر المتحدة (AI).' 
-                  : 'Formulate custom growth tactics, brand architectures, and visual alignments in seconds with Dussur\'s automated strategic engine (AI).'}
+                  ? 'اكتب تفاصيل مشروعك البسيطة، وخلي ذكاء دُسُر AI يحلل علامتك، يقترح لك أفكار تسويقية مبتكرة، ويقول لك بالضبط وش الركائز والخدمات اللي تفيدك من عندنا وتوفر ميزانيتك.' 
+                  : 'Enter a few details and let Dussur AI analyze your business needs, recommend creative marketing concepts, and discover exactly which services/pillars fit your growth plan.'}
               </p>
             </div>
             

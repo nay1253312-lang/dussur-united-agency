@@ -37,7 +37,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       timers.push(
         setTimeout(() => {
           setCurrentStep(index);
-        }, index * 1400) // Staggered steps
+        }, index * 2800) // Staggered steps (slower: 2800ms per phrase instead of 1400ms)
       );
     });
 
@@ -46,8 +46,8 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       setIsVisible(false);
       setTimeout(() => {
         onComplete();
-      }, 800); // Wait for fade out animation
-    }, texts.length * 1400 + 1200);
+      }, 1000); // Wait for fade out animation
+    }, texts.length * 2800 + 1600);
 
     return () => {
       timers.forEach(clearTimeout);

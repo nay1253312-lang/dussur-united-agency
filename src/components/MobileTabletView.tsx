@@ -482,7 +482,7 @@ export default function MobileTabletView({}: MobileTabletViewProps) {
     <div className={`relative min-h-screen bg-[#080809] text-[#FFF6CD] antialiased overflow-x-hidden ${isAr ? 'rtl' : 'ltr'}`}>
       
       {/* 1. Sticky Mobile Header */}
-      <header className="fixed top-0 inset-x-0 h-20 bg-[#080809]/80 backdrop-blur-xl border-b border-[#FFF6CD]/5 z-50 flex items-center justify-between px-4 sm:px-6 select-none">
+      <header className="fixed top-0 inset-x-0 h-28 bg-[#080809]/80 backdrop-blur-xl border-b border-[#FFF6CD]/5 z-50 flex items-center justify-between px-4 sm:px-6 select-none">
         <a 
           href="#hero-m" 
           onClick={(e) => { e.preventDefault(); scrollToMobileSection("hero-m"); }}
@@ -491,7 +491,7 @@ export default function MobileTabletView({}: MobileTabletViewProps) {
           <img 
             src={isAr ? "/logo-ar.svg" : "/logo-en.svg"} 
             alt="Dussur" 
-            className="h-14 w-auto object-contain hover:brightness-110 active:scale-95 transition-all drop-shadow-[0_2px_10px_rgba(200,90,23,0.15)] animate-none"
+            className="h-24 w-auto object-contain hover:brightness-110 active:scale-95 transition-all drop-shadow-[0_2px_12px_rgba(200,90,23,0.25)] animate-none"
             referrerPolicy="no-referrer"
           />
         </a>
@@ -541,7 +541,7 @@ export default function MobileTabletView({}: MobileTabletViewProps) {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed top-20 inset-x-0 bg-[#0F1012] border-b border-[#FFF6CD]/10 z-40 overflow-hidden box-shadow-2xl"
+            className="fixed top-24 inset-x-0 bg-[#0F1012] border-b border-[#FFF6CD]/10 z-40 overflow-hidden box-shadow-2xl"
           >
             <div className={`p-6 flex flex-col gap-3.5 ${isAr ? 'text-right' : 'text-left'}`}>
               <button 
@@ -598,7 +598,7 @@ export default function MobileTabletView({}: MobileTabletViewProps) {
       </AnimatePresence>
 
       {/* 3. Main Touch Viewport Stack */}
-      <main className="pt-28 px-4 sm:px-6 space-y-20">
+      <main className="pt-32 px-4 sm:px-6 space-y-20">
         
         {/* -- SECTION A: Pure Custom Landing Hero -- */}
         <motion.section 

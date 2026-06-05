@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { ContactMessage } from '../types';
 import { useLanguage } from '../LanguageContext';
+import { servicesData } from '../data/servicesData';
 
 export default function ContactView() {
   const { lang, t } = useLanguage();
@@ -115,31 +116,39 @@ export default function ContactView() {
           </div>
 
           <div className="space-y-4">
-            {/* Tel */}
-            <div className="flex gap-4 items-center bg-[#0F1012] p-4 rounded-xl border border-[#FFF6CD]/5 hover:border-[#C85A17]/15 transition-all luxury-breath-flat justify-start">
-              <div className="w-10 h-10 rounded-lg bg-[#C85A17]/15 flex items-center justify-center text-[#FFD000] shrink-0">
+            {/* Tel (Active Link directly to WhatsApp) */}
+            <a 
+              href="https://wa.me/966548971306" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="flex gap-4 items-center bg-[#0F1012] p-4 rounded-xl border border-[#FFF6CD]/5 hover:border-[#C85A17]/15 transition-all text-right group decoration-transparent hover:decoration-transparent luxury-breath-flat justify-start"
+            >
+              <div className="w-10 h-10 rounded-lg bg-[#C85A17]/15 flex items-center justify-center text-[#FFD000] group-hover:bg-[#C85A17] transition-all shrink-0">
                 <Phone className="w-5 h-5" />
               </div>
               <div className="ltr:text-left rtl:text-right">
-                <span className="text-[10px] text-[#A39E8C] block uppercase tracking-wide">
-                  {lang === 'ar' ? 'هاتف الاتصال والواتساب' : 'Inquiries & WhatsApp'}
+                <span className="text-[10px] text-[#A39E8C] block uppercase tracking-wide group-hover:text-[#FFD000] transition-colors">
+                  {lang === 'ar' ? 'تواصل معنا واتساب مباشر' : 'Contact via Live WhatsApp'}
                 </span>
                 <span className="text-sm font-semibold text-[#FFF6CD] tracking-wider" style={{ direction: 'ltr', display: 'inline-block' }}>0548971306</span>
               </div>
-            </div>
+            </a>
 
-            {/* Email */}
-            <div className="flex gap-4 items-center bg-[#0F1012] p-4 rounded-xl border border-[#FFF6CD]/5 hover:border-[#C85A17]/15 transition-all luxury-breath-flat justify-start">
-              <div className="w-10 h-10 rounded-lg bg-[#C85A17]/15 flex items-center justify-center text-[#FFD000] shrink-0">
+            {/* Email (Active Link directly to info@dussuru.com) */}
+            <a 
+              href="mailto:info@dussuru.com" 
+              className="flex gap-4 items-center bg-[#0F1012] p-4 rounded-xl border border-[#FFF6CD]/5 hover:border-[#C85A17]/15 transition-all text-right group decoration-transparent hover:decoration-transparent luxury-breath-flat justify-start"
+            >
+              <div className="w-10 h-10 rounded-lg bg-[#C85A17]/15 flex items-center justify-center text-[#FFD000] group-hover:bg-[#C85A17] transition-all shrink-0">
                 <Mail className="w-5 h-5" />
               </div>
               <div className="ltr:text-left rtl:text-right">
-                <span className="text-[10px] text-[#A39E8C] block uppercase tracking-wide">
+                <span className="text-[10px] text-[#A39E8C] block uppercase tracking-wide group-hover:text-[#FFD000] transition-colors">
                   {lang === 'ar' ? 'البريد الإلكتروني المعتمد' : 'Sovereign Digital Mail'}
                 </span>
-                <span className="text-sm font-semibold text-[#FFF6CD] tracking-wider">info@dussur.com</span>
+                <span className="text-sm font-semibold text-[#FFF6CD] tracking-wider">info@dussuru.com</span>
               </div>
-            </div>
+            </a>
 
             {/* Location */}
             <a 
@@ -166,7 +175,7 @@ export default function ContactView() {
         </div>
 
         {/* Right Side: Form View (7 columns) */}
-        <div className="lg:col-span-7 bg-[#0F1012]/40 rounded-2xl border border-[#FFF6CD]/5 p-6 md:p-8 backdrop-blur-md relative shadow-2xl">
+        <div className="lg:col-span-7 bg-[#0F1012]/08 rounded-2xl border border-[#FFF6CD]/5 p-6 md:p-8 backdrop-blur-md relative shadow-2xl">
           <h3 className="text-xl md:text-2xl font-bold text-[#FFF6CD] mb-6 border-b border-[#FFF6CD]/5 pb-4 ltr:text-left rtl:text-right">
              {lang === 'ar' ? 'استمارة طلب الاتصال والتأصيل' : 'Inquiry & Brand Anchoring Brief'}
           </h3>
@@ -242,21 +251,14 @@ export default function ContactView() {
                   onChange={e => setFormData({ ...formData, service: e.target.value })}
                 >
                   <option value="" disabled>{lang === 'ar' ? 'اختر ركيزتك المنشودة...' : 'Select your desired route...'}</option>
-                  <option value="strat">{lang === 'ar' ? 'الركيزة 1: استراتيجية الهوية وتكامل المكانة' : 'Pillar 1: Brand Strategy & Positioning'}</option>
-                  <option value="design">{lang === 'ar' ? 'الركيزة 2: ابتكار نظم التصميم والرموز البصرية' : 'Pillar 2: Identity Systems & Visual Codes'}</option>
-                  <option value="media">{lang === 'ar' ? 'الركيزة 3: تصميم المنتجات وتجارب الاستخدام UX/UI' : 'Pillar 3: UX/UI & Digital Products'}</option>
-                  <option value="social">{lang === 'ar' ? 'الركيزة 4: تصميم وتطوير المواقع والمنصات الفاخرة' : 'Pillar 4: Premium Web Development'}</option>
-                  <option value="pr">{lang === 'ar' ? 'الركيزة 5: الذكاء الاصطناعي واستوديو الابتكار' : 'Pillar 5: AI Custom Agents & Labs'}</option>
-                  <option value="digital">{lang === 'ar' ? 'الركيزة 6: التسويق بالنمو المتسارع والتحليل' : 'Pillar 6: Growth Strategies & BI'}</option>
-                  <option value="print">{lang === 'ar' ? 'الركيزة 7: الإنتاج السينمائي والسرد القصصي' : 'Pillar 7: Cinematic Narrative & Recording'}</option>
-                  <option value="adv_campaigns">{lang === 'ar' ? 'الركيزة 8: التخطيط الإستراتيجي والحملات الإعلانية' : 'Pillar 8: Ad Campaigns & Spend Mapping'}</option>
-                  <option value="classic_branding">{lang === 'ar' ? 'الركيزة 9: التصميم الإبداعي والهوية المؤسسية' : 'Pillar 9: Classical Corporate Branding'}</option>
-                  <option value="classic_prod">{lang === 'ar' ? 'الركيزة 10: الإنتاج المرئي والمحتوى السينمائي' : 'Pillar 10: Video Production & Cinematic Reels'}</option>
-                  <option value="social_mgmt">{lang === 'ar' ? 'الركيزة 11: إدارة الشبكات والاتصال الرقمي' : 'Pillar 11: Corporate Social Management'}</option>
-                  <option value="pr_events">{lang === 'ar' ? 'الركيزة 12: العلاقات العامة وتنظيم الفعاليات' : 'Pillar 12: Public Relations & VIP Events'}</option>
-                  <option value="performance">{lang === 'ar' ? 'الركيزة 13: التسويق الرقمي والأداء العالي' : 'Pillar 13: Paid Media Performance'}</option>
-                  <option value="print_ooh">{lang === 'ar' ? 'الركيزة 14: المطبوعات الفاخرة واللوحات الخارجية' : 'Pillar 14: Royal Print & OOH Landmarks'}</option>
-                  <option value="other">{lang === 'ar' ? 'الركيزة 15: أخرى / ركيزة مخصصة' : 'Pillar 15: Custom Tailored Pillar Opportunity'}</option>
+                  {servicesData.map(s => (
+                    <option key={s.id} value={s.id}>
+                      {lang === 'ar' 
+                        ? `الركيزة ${s.number}: ${s.titleAr}` 
+                        : `Pillar ${s.number}: ${s.titleEn}`}
+                    </option>
+                  ))}
+                  <option value="other">{lang === 'ar' ? 'الركيزة 09: أخرى / ركيزة مخصصة' : 'Pillar 09: Custom Tailored Pillar Opportunity'}</option>
                 </select>
               </div>
             </div>

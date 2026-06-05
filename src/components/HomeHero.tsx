@@ -83,14 +83,6 @@ export default function HomeHero() {
           </motion.h3>
         </div>
 
-        {/* Detailed Agency Slogan Paragraph */}
-        <motion.p 
-          variants={itemVariants}
-          className="text-base md:text-xl text-[#A39E8C] max-w-3xl leading-relaxed mt-8 font-medium text-justify"
-        >
-          {t('hero.desc')}
-        </motion.p>
-
         {/* Quick CTA Anchors Links */}
         <motion.div 
           variants={itemVariants}

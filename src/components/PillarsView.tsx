@@ -62,7 +62,7 @@ export default function PillarsView() {
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-            <div className="flex gap-3 bg-[#0F1012] p-4 rounded-xl border border-[#FFF6CD]/5 hover:border-[#FFD000]/10 transition-all">
+            <div className="flex gap-3 bg-[#0F1012]/08 p-4 rounded-xl border border-[#FFF6CD]/5 hover:border-[#FFD000]/10 transition-all">
               <ShieldCheck className="w-8 h-8 text-[#FFD000] shrink-0" />
               <div>
                 <h4 className="text-sm font-bold text-[#FFF6CD]">{t('about.card1_title')}</h4>
@@ -70,7 +70,7 @@ export default function PillarsView() {
               </div>
             </div>
 
-            <div className="flex gap-3 bg-[#0F1012] p-4 rounded-xl border border-[#FFF6CD]/5 hover:border-[#C85A17]/20 transition-all">
+            <div className="flex gap-3 bg-[#0F1012]/08 p-4 rounded-xl border border-[#FFF6CD]/5 hover:border-[#C85A17]/20 transition-all">
               <Landmark className="w-8 h-8 text-[#C85A17] shrink-0" />
               <div>
                 <h4 className="text-sm font-bold text-[#FFF6CD]">{t('about.card2_title')}</h4>
@@ -81,7 +81,7 @@ export default function PillarsView() {
         </div>
 
         {/* Right Column: Dynamic Counter (5 cols) */}
-        <div id="exp-sec" className="lg:col-span-5 flex flex-col justify-center items-center text-center p-8 rounded-2xl bg-gradient-to-br from-[#0F1012] to-[#080809] border border-[#FFF6CD]/5 relative overflow-hidden shadow-2xl">
+        <div id="exp-sec" className="lg:col-span-5 flex flex-col justify-center items-center text-center p-8 rounded-2xl bg-gradient-to-br from-[#0F1012]/10 to-[#080809]/05 border border-[#FFF6CD]/5 relative overflow-hidden shadow-2xl">
           {/* Subtle cosmic circle lines overlay */}
           <div className="absolute w-72 h-72 rounded-full border border-[#C85A17]/5 -top-10 -left-10" />
           <div className="absolute w-44 h-44 rounded-full border border-[#FFD000]/5 -bottom-10 -right-10 animate-pulse" />
